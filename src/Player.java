@@ -2,39 +2,28 @@ import java.util.Scanner;
 
 public class Player {
 
-    private int damage,healthy, money;
+    private int damage,healthy, money,rHealty;
     private String name, cName;
     private Inventory inv;
 
     Scanner scan = new Scanner(System.in);
     public Player(String name) {
         this.name = name;
+        this.inv= new Inventory();
     }
     public void selectCha(){
         switch (chaMenu()){
             case 1:
-                setcName("Samuray");
-                setDamage(5);
-                setHealthy(21);
-                setMoney(15);
+                 init("Samuray",5,21,15);
                 break;
             case 2:
-                setcName("Okçu");
-                setDamage(7);
-                setHealthy(18);
-                setMoney(20);
+                init("Okçu",7,18,20);
                 break;
             case 3:
-                setcName("Şövalye");
-                setDamage(8);
-                setHealthy(24);
-                setMoney(5);
+                init("Şövalye",8,24,5);
                 break;
             default:
-                setcName("Samuray");
-                setDamage(5);
-                setHealthy(21);
-                setMoney(15);
+                init("Samuray",5,21,15);
                 break;
 
         }
@@ -53,12 +42,21 @@ public class Player {
         while (charId < 1 || charId>3) {
             System.out.println("Lütfen 1-3 Arasında bir sayı giriniz...");
             charId=scan.nextInt();
-
         }
-
-
         return charId;
     }
+    public int getTotalDamage(){
+        return this.getDamage()+this.getInv().getDamage();
+    }
+
+    public void init(String cNm,int dmg,int hlty,int mny){
+        setcName(cNm);
+        setDamage(dmg);
+        setHealthy(hlty);
+        setMoney(mny);
+        setrHealty(hlty);
+    }
+
 
     public int getDamage() {
         return damage;
@@ -106,5 +104,13 @@ public class Player {
 
     public void setInv(Inventory inv) {
         this.inv = inv;
+    }
+
+    public int getrHealty() {
+        return rHealty;
+    }
+
+    public void setrHealty(int rHealty) {
+        this.rHealty = rHealty;
     }
 }
