@@ -23,21 +23,22 @@ public abstract class BattleLoc extends Location{
 
                 System.out.println(this.getLocName() + " bölgesindeki tüm düşmanları temizlediniz !!!");
 
-                if (this.award.equals("Food") && player.getInv().isFood() == false) {
+                if (this.award.equals("Food") && !player.getInv().isFood()) {
                     System.out.println(this.award + " Kazandınız");
                     player.getInv().setFood(true);
-                }else if (this.award.equals("Water") && player.getInv().isWater() == false) {
+                }else if (this.award.equals("Water") && !player.getInv().isWater()) {
                     System.out.println(this.award + " Kazandınız");
                     player.getInv().setWater(true);
-                }else if (this.award.equals("Firewood") && player.getInv().isFirewood() == false) {
+                }else if (this.award.equals("Firewood") && !player.getInv().isFirewood()) {
                     System.out.println(this.award + " Kazandınız");
                     player.getInv().setFirewood(true);
                 }
                 return true;
-            }else {
-                    System.out.println("Öldünüz.........");
-                    return true;
+            }if(player.getHealthy()<=0) {
+                System.out.println("Öldünüz.........");
+                return true;
                 }
+
             }
             return true;
         }
@@ -49,7 +50,7 @@ public abstract class BattleLoc extends Location{
             enemyStats();
             while (player.getrHealty()>0 && obstracle.getHealth()>0){
                 System.out.println("<V>ur veya <K>aç: ");
-                String selCase = scan.nextLine();
+                String selCase = scan.next();
                 selCase = selCase.toUpperCase();
                 if(selCase.equals("V")){
                     System.out.println("Siz vurdunuz....");
@@ -62,13 +63,14 @@ public abstract class BattleLoc extends Location{
                         afterHit();
                     }
                 }else {
-                    break;
+                    return false;
                 }
             }
-            if(obstracle.getHealth()<=0 && player.getrHealty()>0){
-                System.out.println("Tüm düşmanları yendiniz.......");
+            if(obstracle.getHealth()< player.getrHealty()){
+                System.out.println("düşmanı yendiniz.......");
                 player.setMoney(player.getMoney()+obstracle.getAward());
                 System.out.println("güncel paranız: "+player.getMoney());
+                System.out.println();
                 obstracle.setHealth(defObsHealth);
             }else {
                 return false;
@@ -97,8 +99,8 @@ public abstract class BattleLoc extends Location{
         System.out.println("--------------------------------------------\n");
     }
     public void afterHit(){
-        System.out.println("Oyuncu Canı: "+player.getrHealty());
-        System.out.println(obstracle.getName()+obstracle.getHealth());
+        System.out.println("Oyuncu Canı: "+player.getHealthy());
+        System.out.println(obstracle.getName()+"canı : "+obstracle.getHealth());
     }
 
 
